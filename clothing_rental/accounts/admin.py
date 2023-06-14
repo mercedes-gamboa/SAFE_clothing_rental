@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from accounts.models import Profile, ShoppingCart
+from accounts.models import Profile, ShoppingCart, Favourite
 from products.models import Clothes, Category, Variation, VariationOption, ClothingItem, ClothingConfiguration, Inventory
 from orders.models import Order, OrderLine, OrderStatus
 
@@ -16,6 +16,7 @@ class UserAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Profile)
 admin.site.register(ShoppingCart)
+admin.site.register(Favourite)
 
 admin.site.register(Clothes)
 admin.site.register(Category)

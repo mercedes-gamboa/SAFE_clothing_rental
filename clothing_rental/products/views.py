@@ -104,7 +104,7 @@ class ClothingItemDetailView(DetailView):
 
 class ClothingItemListView(ListView):
     model = ClothingItem
-    template_name = "clothing_list.html"
+    template_name = "clothing_item_variaty.html"
 
 class AddClothingView(AccessMixin, CreateView):
     model = ClothingItem
@@ -319,24 +319,26 @@ class AddToCartView(LoginRequiredMixin, View):
         cart = get_object_or_404(ShoppingCart, user=request.user)
         clothing_item = get_object_or_404(ClothingItem, id=pk)
         cart.clothing_items.add(clothing_item)
+        clothing_item.quantity_in_stock -= 1
+        clothing_item.save()
         messages.add_message(
             request=self.request, level=messages.SUCCESS, message="The item has been added to the cart succesfully!"
         )
-        return redirect("clothing_list")
+        return redirect("clothing_item_variaty")
 
 class AddToFavouritesView(LoginRequiredMixin, View):
     def post(self, request, pk):
         favourite = get_object_or_404(Favourite, user=request.user)
         clothing_item = get_object_or_404(ClothingItem, id=pk)
 
-        if favourite.exists():
+        if favourite.clothing_items.filter(id=pk).exists():
             messages.warning(request=self.request, message="This item is already in your favourites list.")
         else:
             favourite.clothing_items.add(clothing_item)
             messages.add_message(
                 request=self.request, level=messages.SUCCESS, message="The item has been added to your favourite's list!"
             )
-        return redirect("clothing_item")
+        return redirect("clothing_item_variaty")
 
 class RemoveFavoriteView(LoginRequiredMixin, View):
     def get(self, request, favourite_id):

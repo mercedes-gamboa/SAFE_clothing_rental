@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
-from products.models import ClothingItem
+from products.models import ClothingItem, Inventory
 
 
 class CustomUserManager(BaseUserManager):

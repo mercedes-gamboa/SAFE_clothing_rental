@@ -32,5 +32,5 @@ class ProfileForm(forms.ModelForm):
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField()
-    password = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 

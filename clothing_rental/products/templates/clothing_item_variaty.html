@@ -38,8 +38,17 @@
                 <td>{{ item.code }}</td>
                 <td>{{ item.name }}</td>
                 <td>
-                    <form method="POST" action="{% url 'add_to_cart' item.id %}">{% csrf_token %}
-                        <input type="submit" value="Add to cart">
+                    {% if item.quantity_in_stock < 1 %}
+                        Not available at the moment
+                    {% else %}
+                            <form method="POST" action="{% url 'add_to_cart' item.id %}">{% csrf_token %}
+                                <input type="submit" value="Add to cart">
+                            </form>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'add_to_favourites' item.id %}">{% csrf_token %}
+                        <input type="submit" value="Add to favourites">
                     </form>
                 </td>
                 {% if user.is_authenticated %}

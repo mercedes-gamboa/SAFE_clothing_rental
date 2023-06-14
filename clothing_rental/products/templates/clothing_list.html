@@ -50,8 +50,15 @@
                 {% endif %}
             </tr>
             {% endfor %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Add clothes(product)</button>
+            </form>
+
         </tbody>
     </table>
-{% endblock body %}
+
+{% endblock %}
 
 

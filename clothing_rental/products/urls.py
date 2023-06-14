@@ -6,7 +6,7 @@ urlpatterns = [
     #path("add/clothes/", views.AddClothingView.as_view(), name='new_clothing_item'),
     path("add/clothing-item/", views.AddClothingView.as_view(), name="new_clothing_item"),
     path("clothing-item/<int:pk>/", views.ClothingItemDetailView.as_view(), name="clothing_item"),
-    path("list/clothing-item/", views.ClothingItemListView.as_view(), name="clothing_list"),
+    path("list/clothing-item/", views.ClothingItemListView.as_view(), name="clothing_item_variaty"),
     path("delete/clothing-item/<int:pk>/", views.ClothingItemDeleteView.as_view(), name="delete_clothing_item"),
     path("update/clothing-item/<int:pk>/", views.ClothingItemUpdateView.as_view(), name="update_clothing_item"),
 
@@ -50,7 +50,7 @@ urlpatterns = [
     path("add-to-cart/<int:pk>/", views.AddToCartView.as_view(), name='add_to_cart'),
     path("list/cart/", views.CartListView.as_view(), name='cart_list'),
 
-    path("add/favourite/", views.AddToFavouritesView.as_view(), name='add_to_favourites'),
+    path("add/favourite/<int:pk>/", views.AddToFavouritesView.as_view(), name='add_to_favourites'),
     path("delete/favourite/<int:pk>/", views.RemoveFavoriteView.as_view(), name='remove_favourite'),
     path("list/favourites/", views.FavouritesListView.as_view(), name='favorites_list'),
     ]
