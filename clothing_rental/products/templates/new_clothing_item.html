@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Add new item</h2>
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="file" name="image">
+            <button type="submit">Upload image</button>
+        </form>
+    </div>
+
+    <p>
+        <a href="{% url 'clothing_item_variaty' %}" class="btn btn-primary">View clothing list</a>
+    </p>
+
+<!--    <p>-->
+<!--        <a href="{% url "clothes_list" %}"></a>-->
+<!--    </p>-->
+{% endblock %}
+
