@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, resolve
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from products.views import AddClothingView, ClothingItemDetailView, ClothingItemListView, ClothesListView, add_clothes, \
     CategoryCreateView, CategoryListView, VariationCreateView, VariationListView, VariationOptionsCreateView, \
@@ -112,7 +113,7 @@ class TestUrls(SimpleTestCase):
         self.assertEqual(view, CartListView)
 
     def test_favourite_list_url(self):
-        url = reverse('favorites_list')
+        url = reverse('favourites_list')
 
         view = resolve(url).func.view_class
         self.assertEqual(view, FavouritesListView)
@@ -251,34 +252,45 @@ class TestViews(TestCase):
 
     def setUp(self):
         self.category_1 = Category.objects.create(category_name="pants")
-        self.clothes_1 = Clothes.objects.create(category=self.category_1, clothing_name="capripants", description="xyq", clothing_image=None )
-        self.clothing_item_1 = ClothingItem.objects.create(quantity_in_stock=3, item_image=None, price = 10.00, clothes=self.clothes_1, code="ABC123", name="Tropical Blouse")
+        self.clothes_1 = Clothes.objects.create(
+            category=self.category_1,
+            clothing_name="capripants",
+            description="xyq",
+            clothing_image=SimpleUploadedFile(
+                name='test.png',
+                content=b'',
+                content_type='image/png'
+            )
+        )
+        self.clothing_item_1 = ClothingItem.objects.create(
+            quantity_in_stock=3,
+            item_image=SimpleUploadedFile(
+                name='test2.png',
+                content=b'',
+                content_type='image/png'
+            ),
+            price = 10.00,
+            clothes=self.clothes_1,
+            code="ABC123",
+            name="Tropical Blouse"
+        )
         self.user.shoppingcart.clothing_items.set([self.clothing_item_1])
 
-    # def test_add_clothing_view_GET(self):
-    #
-    #     url = reverse('new_clothing_item')
-    #     response = self.client.get(url)
-    #     # print(dir(response))
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'new_clothing_item.html')
 
+    def test_clothes_list_GET(self):
+        self.client.force_login(self.user)
+        url = reverse('clothes_list')
+        response = self.client.get(url)
+        # print(dir(response))
 
-    # def test_clothes_list_GET(self):
-    #     self.client.force_login(self.user)
-    #     url = reverse('clothes_list')
-    #     response = self.client.get(url)
-    #     # print(dir(response))
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'clothes_list.html')
-    #
-    #     clothes_item = response.context["clothes"][0]
-    #     self.assertIsInstance(clothes_item, Clothes)
-    #     self.assertEqual(response.context["clothes"].count(), 1)
-    #     self.assertEqual(clothes_item.clothing_name, self.clothes_1.clothing_name)
-    #     print(response.context["clothes"])
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'clothes_list.html')
+
+        clothes_item = response.context["clothes"][0]
+        self.assertIsInstance(clothes_item, Clothes)
+        self.assertEqual(response.context["clothes"].count(), 1)
+        self.assertEqual(clothes_item.clothing_name, self.clothes_1.clothing_name)
+        # print(response.context["clothes"])
 
 
     def test_cart_list_view_GET(self):
@@ -289,9 +301,9 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,"products/cart_list.html")
 
-        cart_item = response.context["cart_items"][0]
-        self.assertIsInstance(cart_item, ShoppingCart)
-        self.assertEqual(response.context["cart_items"].count(), 1)
-        self.assertEqual(cart_item.user, self.user)
-        self.assertEqual(cart_item.clothing_items.count(), 1)
-        self.assertEqual(cart_item.clothing_items.first(), self.clothing_item_1)
+        print(response.context)
+        cart = response.context["shopping_cart"]
+        self.assertIsInstance(cart, ShoppingCart)
+        self.assertEqual(cart.user, self.user)
+        self.assertEqual(cart.clothing_items.count(), 1)
+        self.assertEqual(cart.clothing_items.first(), self.clothing_item_1)

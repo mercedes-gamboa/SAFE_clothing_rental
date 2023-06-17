@@ -39,22 +39,6 @@ def add_clothes(request):
     })
 
 
-# class AddClothes(View):
-#     def get(self, request):
-#         form = ClothesForm()
-#         return render(
-#             request,
-#             "add_clothes.html",
-#             {"form": form}
-#         )
-#
-#     def post(self, request):
-#         form = ClothesForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("clothes_list")
-
-
 class ClothesListView(View):
     def get(self, request):
         clothes = Clothes.objects.all()
@@ -90,6 +74,7 @@ class ClothesUpdateView(AccessMixin, UpdateView):
     model = Clothes
     template_name = "products/clothes_update.html"
     form_class = ClothesForm
+    success_url = reverse_lazy("clothes_list")
 
 # class ClothingItemVariatyView(View):
 #     def get(self, request):
@@ -109,13 +94,13 @@ class ClothingItemListView(ListView):
 class AddClothingView(AccessMixin, CreateView):
     model = ClothingItem
     form_class = ClothingItemForm
-    success_url = reverse_lazy("clothing_list")
+    success_url = reverse_lazy("clothing_item_variaty")
     template_name = "new_clothing_item.html"
 
 
 class ClothingItemDeleteView(AccessMixin, DeleteView):
     model = ClothingItem
-    success_url = reverse_lazy("clothing_list")
+    success_url = reverse_lazy("clothing_item_variaty")
     template_name = "delete-clothes-item.html"
 
 
@@ -341,23 +326,29 @@ class AddToFavouritesView(LoginRequiredMixin, View):
         return redirect("clothing_item_variaty")
 
 class RemoveFavoriteView(LoginRequiredMixin, View):
-    def get(self, request, favourite_id):
-        favourite = get_object_or_404(Favourite, id=favourite_id, user=request.user)
+    def post(self, request, favourite_id):
+        favourite = get_object_or_404(Favourite, user=request.user)
+        clothing_item = get_object_or_404(ClothingItem, id=favourite_id)
 
-        favourite.delete()
+        favourite.clothing_items.remove(clothing_item)
         messages.add_message(request=self.request, level=messages.SUCCESS, message="Favourite item removed succesfully.")
         return redirect("favourites_list")
 
 class FavouritesListView(LoginRequiredMixin, View):
     def get(self, request):
-        favourites = Favourite.objects.filter(user=request.user)
-        context = {"favourites": favourites}
+        favourite = Favourite.objects.get(user=request.user)
+        context = {"favourite": favourite}
         return render(request, "products/favourites_list.html", context)
 
 class CartListView(LoginRequiredMixin, View):
     def get(self, request):
-        cart_items = ShoppingCart.objects.filter(user=request.user)
-        context = {"cart_items": cart_items}
+        shopping_cart = ShoppingCart.objects.get(user=request.user)
+        total_sum = sum(shopping_cart.clothing_items.all().values_list('price', flat=True))
+        # day_counter =
+        context = {
+            "shopping_cart": shopping_cart,
+            "total_sum": total_sum,
+        }
         return render(request, "products/cart_list.html", context)
 
 

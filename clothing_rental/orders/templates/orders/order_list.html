@@ -8,7 +8,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>User</th>
                     <th>Created date</th>
                     <th>Date to be returned</th>
                     <th>Confirmed returned date</th>
@@ -19,13 +18,14 @@
             <tbody>
                 {% for object in order_list %}
                 <tr>
-                    <td>{{ object.user }}</td>
                     <td>{{ object.created_date }}</td>
                     <td>{{ object.date_to_be_returned }}</td>
                     <td>{{ object.confirmed_returned_date }}</td>
                     <td>{{ object.status }}</td>
                     <td>{{ object.code }}</td>
                 </tr>
+            {% empty %}
+                <p>You have no orders yet.</p>
                 {% endfor %}
             </tbody>
         </table>

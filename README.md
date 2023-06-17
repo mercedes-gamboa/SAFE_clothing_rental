@@ -8,10 +8,10 @@
 * [Setup](#setup)
 
 ## General info
-This project is the beginning of a online clothing rental store. People are used to being able to shop clothes even when they'll use the items just once.
-However, this project is about enableing a site where they can rent for a certain period of time and then return the clothes.
+This project is the beginning of an online clothing rental service. People are used to buying clothes, even if they only use the items once.
+However, this project is about creating a website where they can rent the clothes for a certain period of time and then return them.
 
-This project should help create a database of people who want to rent clothes for everyday situations, not only special occasions.
+This project will help create a database of people who want to rent clothes for everyday situations and not just for special occasions.
 
 ### Current stage
 
@@ -48,9 +48,11 @@ Not registered users can only browse through the items but cannot see availabili
 
 ## Technologies
 Project is created with:
-* python dotenv
-* Pillow
-* Django
+* Python 3           (3.11.0)
+* python-dotenv      1.0.0
+* Pillow             9.5.0
+* Django             4.2.1
+* PyMySQL            1.0.3
 
 Requirements.txt provided.
 	

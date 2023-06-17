@@ -3,25 +3,29 @@
 {% block content %}
   <h1>Your Favorites</h1>
 
-  {% if favorite_items %}
-    <ul class="favorite-list">
-      {% for item in favorite_items %}
+    <ul class="favorite-list" style="list-style: none;">
+      {% for item in favourite.clothing_items.all %}
         <li>
           <div class="item-thumbnail">
-            <img src="{{ .image.url }}", style="width: 200px">
+            <img src="{{ item.item_image.url }}", style="width: 200px">
           </div>
           <div class="item-details">
-<!--            <h3>{{ item.product.name }}</h3>-->
-<!--            <p>{{ item.product.description }}</p>-->
-<!--            <p>Price: {{ item.product.price }}/day</p>-->
-            <a href="{% url 'add_to_cart' .id %}">Rent Now</a>
-            <a href="{% url 'remove_favorite' item.id %}">Remove from Favorites</a>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.clothes.description }}</p>
+            <p>Price: {{ item.price }}/day</p>
+            <form method="POST" action="{% url 'add_to_cart' item.id %}">{% csrf_token %}
+              <input type="submit" class="btn btn-primary" value="Rent Now">
+            </form>
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'remove_favourite' item.id %}">{% csrf_token %}
+              <input type="submit" class="btn btn-primary" value="Remove favourite">
+            </form>
+            {% endif %}
           </div>
         </li>
+    {% empty %}
+        <p>You have no favorite items yet.</p>
       {% endfor %}
     </ul>
-  {% else %}
-    <p>You have no favorite items yet.</p>
-  {% endif %}
 
 {% endblock %}

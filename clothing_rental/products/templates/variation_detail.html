@@ -6,5 +6,10 @@
 <p>{{ variation.variation_name }}</p>
 <p>{{ variation.category }}</p>
 </div>
-</form>
+
+  <p>
+    <a href="{% url 'variation_list' %}">
+       <button>Return to variation list</button>
+    </a>
+  </p>
 {% endblock %}

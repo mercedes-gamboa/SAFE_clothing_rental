@@ -51,6 +51,6 @@ urlpatterns = [
     path("list/cart/", views.CartListView.as_view(), name='cart_list'),
 
     path("add/favourite/<int:pk>/", views.AddToFavouritesView.as_view(), name='add_to_favourites'),
-    path("delete/favourite/<int:pk>/", views.RemoveFavoriteView.as_view(), name='remove_favourite'),
-    path("list/favourites/", views.FavouritesListView.as_view(), name='favorites_list'),
+    path("delete/favourite/<int:favourite_id>/", views.RemoveFavoriteView.as_view(), name='remove_favourite'),
+    path("list/favourites/", views.FavouritesListView.as_view(), name='favourites_list'),
     ]

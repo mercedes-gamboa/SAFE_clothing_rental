@@ -18,10 +18,15 @@
             <ul>
                 <li>{{ clothingconfiguration.variation_option.variation.variation_name}}: {{clothingconfiguration.variation_option.value}}</li>
             </ul>
-
-
         {% endfor %}
     {% endfor %}
+
+
+
+    <p>
+        <a href="{% url 'clothes_list' %}"><button class="btn btn-primary">Return to Clothes list</button></a>
+    </p>
+
 
 {% endblock %}
 

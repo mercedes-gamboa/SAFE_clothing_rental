@@ -8,15 +8,4 @@ urlpatterns = [
     path("detail/order/<int:pk>/", views.OrderDetailView.as_view(), name="detail_order"),
     path("update/order/<int:pk>/", views.OrderUpdateView.as_view(), name="update_order"),
 
-    path("add/order-status/", views.OrderStatusCreateView.as_view(), name="add_order_status"),
-    path("list/order-status/", views.OrderStatusListView.as_view(), name="order_status_list"),
-    path("delete/order-status/<int:pk>/", views.OrderStatusDeleteView.as_view(), name="delete_status_order"),
-    path("detail/order-status/<int:pk>/", views.OrderStatusDetailView.as_view(), name="detail_status_order"),
-    path("update/order-status/<int:pk>/", views.OrderStatusUpdateView.as_view(), name="update_status_order"),
-
-    path("add/order-line/", views.OrderLineCreateView.as_view(), name="add_order_line"),
-    path("list/order-line/", views.OrderLineListView.as_view(), name="order_line_list"),
-    path("delete/order-line/<int:pk>/", views.OrderLineDeleteView.as_view(), name="delete_line_order"),
-    path("detail/order-line/<int:pk>/", views.OrderLineDetailView.as_view(), name="detail_line_order"),
-    path("update/order-line/<int:pk>/", views.OrderLineUpdateView.as_view(), name="update_line_order"),
 ]
