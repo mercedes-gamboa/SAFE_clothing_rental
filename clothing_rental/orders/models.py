@@ -1,8 +1,8 @@
 from django.db import models
-from django.conf import settings
-# Create your models here.
+
 from accounts.models import User
 from products.models import Inventory, ClothingItem
+
 
 class OrderStatus(models.Model):
     status = models.CharField(max_length=200)
@@ -14,7 +14,7 @@ class Order(models.Model):
     clothing_item = models.ForeignKey(ClothingItem, on_delete=models.CASCADE)
     created_date = models.DateField(auto_now_add=True, editable=False, blank=False)
     date_to_be_returned = models.DateField(auto_now_add=False)
-    confirmed_returned_date = models.DateField(auto_now_add=False, default=date_to_be_returned)
+    confirmed_returned_date = models.DateField(auto_now_add=False, blank=True)
     total_price = models.DecimalField(max_digits=60, decimal_places=2)
     status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
     code = models.CharField(max_length=100)

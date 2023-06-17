@@ -1,16 +1,14 @@
 from django.db import models
-from django.conf import settings
 from django.core.validators import MinValueValidator
 
-import products
 
-
-# Create your models here.
 class Category(models.Model):
     category_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.category_name
+
+
 class Clothes(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     clothing_name = models.CharField(max_length=250)
@@ -28,12 +26,14 @@ class Variation(models.Model):
     def __str__(self):
         return f'{self.variation_name} ({self.category})'
 
+
 class VariationOption(models.Model):
     value = models.CharField(max_length=200)
     variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.value} {self.variation}'
+
 
 class ClothingItem(models.Model):
     quantity_in_stock = models.IntegerField(validators=[MinValueValidator(0)])
@@ -45,6 +45,7 @@ class ClothingItem(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.code})'
+
 
 class ClothingConfiguration(models.Model):
     clothing_item = models.ForeignKey(ClothingItem, on_delete=models.CASCADE)

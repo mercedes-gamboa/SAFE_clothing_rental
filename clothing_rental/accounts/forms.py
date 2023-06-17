@@ -24,7 +24,6 @@ class UserRegistrationForm(UserCreationForm):
         return user
 
 class ProfileForm(forms.ModelForm):
-    #  is this argument correct?
     class Meta:
         model = Profile
         fields = ('address', 'phone', 'birth_date')

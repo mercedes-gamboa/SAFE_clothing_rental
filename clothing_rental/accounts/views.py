@@ -2,9 +2,8 @@ from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
-from accounts.forms import UserRegistrationForm, UserLoginForm, ProfileForm
+from accounts.forms import UserRegistrationForm, UserLoginForm
 
-# Create your views here.
 
 User = get_user_model()
 
@@ -32,19 +31,6 @@ def register(request):
          template_name="register.html",
          context={"form":form}
      )
-
-def update_profile(request, user_id):
-    if request.method == "GET":
-        form = ProfileForm()
-
-        return render(
-            request,
-            "profile.html",
-            {"form": form}
-        )
-    user = User.objects.get(pk=user_id)
-    user.profile.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
-    user.save()
 
 class Home(TemplateView):
     template_name = "home.html"

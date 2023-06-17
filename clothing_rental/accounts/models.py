@@ -1,10 +1,8 @@
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-from django.conf import settings
-from django.db import models
 from django.db.models.signals import post_save
+from django.db import models
 from django.dispatch import receiver
 
-# Create your models here.
 from products.models import ClothingItem, Inventory
 
 
@@ -50,15 +48,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=240)
     last_name = models.CharField(max_length=255)
 
-
-    # without those two you won't be able to log into django-admin
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
 
-    # comes from PermissionMixin
     is_superuser = models.BooleanField(default=False)
 
-    # every model has to have the manager
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -70,7 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    #user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     address = models.CharField(max_length=250)
     phone = models.CharField(max_length=255)
     birth_date = models.DateField(null=True, blank=True)
@@ -117,6 +110,4 @@ class Favourite(models.Model):
     def __str__(self):
         return f" {self.user} likes {self.clothing_items}"
 
-
-"""END OF NEW """
 

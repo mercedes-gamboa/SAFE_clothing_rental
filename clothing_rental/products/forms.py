@@ -4,6 +4,7 @@ from .models import Clothes, Category, Variation, ClothingItem, ClothingConfigur
 
 from accounts.models import Favourite
 
+
 class ClothesForm(forms.ModelForm):
     class Meta:
         model = Clothes
@@ -44,6 +45,7 @@ class InventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
         fields = ["clothes_item", "detail", "code", "price"]
+
 
 class FavouriteForm(forms.ModelForm):
     class Meta:

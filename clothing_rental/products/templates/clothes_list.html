@@ -3,7 +3,10 @@
 {% block body %}
 
     <h2>Clothes List</h2>
-    {% include "filter_form.html" %}
+    <div>
+        {% include "filter_form.html" %}
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -11,7 +14,7 @@
                 <th>Name</th>
                 <th>Image</th>
                 {% if user.is_authenticated %}
-                        <th>#</th>
+                        <th>Details</th>
                     {% if user.is_staff %}
                         <th>Delete</th>
                         <th>Edit</th>

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
 from django.urls import reverse_lazy
@@ -12,12 +12,13 @@ from .forms import ClothesForm, CategoryForm, VariationForm, ClothingItemForm, V
 
 from accounts.models import ShoppingCart, Favourite
 
-# Create your views here.
+
 class AccessMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.is_staff:
             return super().dispatch(request, *args, **kwargs)
         return self.handle_no_permission()
+
 
 def upload(request):
     if request.method == 'POST':
@@ -25,6 +26,7 @@ def upload(request):
         fs = FileSystemStorage()
         fs.save(uploaded_file.name, uploaded_file)
     return render(request, "new_clothing_item.html")
+
 
 def add_clothes(request):
     if request.method == 'POST':
@@ -64,6 +66,7 @@ class ClothesDeleteView(AccessMixin, DeleteView):
     success_url = reverse_lazy("clothes_list")
     template_name = "delete-clothes-item.html"
 
+
 class ClothesDetailView(DetailView):
     model = Clothes
     template_name = "products/clothes-detail.html"
@@ -76,20 +79,17 @@ class ClothesUpdateView(AccessMixin, UpdateView):
     form_class = ClothesForm
     success_url = reverse_lazy("clothes_list")
 
-# class ClothingItemVariatyView(View):
-#     def get(self, request):
-
-
-"""ClothingItem Views"""
 
 class ClothingItemDetailView(DetailView):
     model = ClothingItem
     template_name = "clothing_item.html"
     context_object_name = "clothing"
 
+
 class ClothingItemListView(ListView):
     model = ClothingItem
     template_name = "clothing_item_variaty.html"
+
 
 class AddClothingView(AccessMixin, CreateView):
     model = ClothingItem
@@ -109,7 +109,7 @@ class ClothingItemUpdateView(AccessMixin, UpdateView):
     template_name = "update_clothing_item.html"
     form_class = ClothingItemForm
 
-"""Category Views"""
+
 class CategoryCreateView(AccessMixin, CreateView):
     model = Category
     form_class = CategoryForm
@@ -139,7 +139,7 @@ class CategoryUpdateView(AccessMixin, UpdateView):
     template_name = "update_category_form.html"
     form_class = CategoryForm
 
-"""Variation Views"""
+
 class VariationCreateView(AccessMixin, CreateView):
     model = Variation
     template_name = "add_variation.html"
@@ -170,7 +170,7 @@ class VariationUpdateView(AccessMixin, UpdateView):
     template_name = "update_variation.html"
     form_class = VariationForm
 
-"""VariationOptions Views"""
+
 class VariationOptionsCreateView(AccessMixin, CreateView):
     model = VariationOption
     template_name = "products/add_variationoptions.html"
@@ -198,7 +198,7 @@ class VariationOptionUpdateView(AccessMixin, UpdateView):
     template_name = "update_variationoptions.html"
     form_class = VariationOptionForms
 
-"""Variation Views"""
+
 class VariationCreateView(AccessMixin, CreateView):
     model = Variation
     template_name = "add_variation.html"
@@ -229,7 +229,6 @@ class VariationUpdateView(AccessMixin, UpdateView):
     template_name = "update_variation.html"
     form_class = VariationForm
 
-"""ClothingConfiguration Views"""
 
 class ClothingConfigurationListView(AccessMixin, ListView):
     model = ClothingConfiguration
@@ -265,8 +264,6 @@ class ClothingConfigurationUpdateView(AccessMixin, UpdateView):
     template_name = "update_clothing_configuration.html"
     form_class = ClothingConfigurationForm
 
-
-"""Inventory Views"""
 
 class InventoryListView(AccessMixin, ListView):
     model = ClothingConfiguration

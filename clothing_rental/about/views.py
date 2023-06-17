@@ -4,8 +4,6 @@ from django.views import View
 
 from .forms import ContactForm
 
-
-# Create your views here.
 def about_page(request):
     return render(request, 'about/about.html')
 
@@ -27,7 +25,7 @@ class ContactUs(View):
                 'Contact Form Submission',
                 f'Name: {name}\nEmail: {email}\nMessage: {message}',
                 email,
-                ['your-email@example.com'],  # Replace with your email address
+                ['dev.test.mp.gm@gmail.com'],  # Replace with your email address
                 fail_silently=False,
             )
 

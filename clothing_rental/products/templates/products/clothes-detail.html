@@ -7,7 +7,9 @@
         <p>{{ clothes.category }}</p>
         <p>{{ clothes.clothing_name }}</p>
         <p>Description: {{ object.description }}</p>
-        <p><img src="{{ clothes.clothing_image.url }}" style="width: 300px"></p>
+        {% if clothes.clothing_image %}
+            <p><img src="{{ clothes.clothing_image.url }}" style="width: 300px"></p>
+        {% endif %}
     </div>
     <p>
         <a href="{% url 'clothes_list' %}"><button class="btn btn-primary">Return to Clothes list</button></a>
@@ -21,12 +23,9 @@
         {% endfor %}
     {% endfor %}
 
-
-
     <p>
-        <a href="{% url 'clothes_list' %}"><button class="btn btn-primary">Return to Clothes list</button></a>
+        <a href="{% url 'clothing_item_variaty' %}"><button class="btn btn-primary">Return to Clothing list</button></a>
     </p>
-
 
 {% endblock %}
 
