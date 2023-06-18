@@ -2,8 +2,8 @@
 
 ## Table of contents
 * [General info](#general-info)
-  * [Current stage](###current-stage)
-  * [Functionalities](###Functionalities)
+* [Current stage](###current-stage)
+* [Functionalities](###Functionalities)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
